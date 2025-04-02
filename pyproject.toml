@@ -1,10 +1,15 @@
 [project]
-name = "ai-agent-setup"
+name = "job-pitch-ai-agent"
 version = "0.1.0"
-description = "AI Agent setup for automating digital tasks"
+description = "A terminal-based AI agent for generating personalized job pitches and scheduling appointments."
+authors = [
+    {name = "Tomilola Oluwafemi", email = "tomilolaoluwafemi.ng@gmail.com"},
+]
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
+    "google-api-python-client>=2.166.0",
+    "google-auth-oauthlib>=1.2.1",
     "openai>=1.68.2",
     "pydantic>=2.10.6",
     "python-dotenv>=1.0.1",

@@ -1,13 +1,18 @@
 """Main module for AI-agent."""
 
-from utils.openai import OpenAIClient
-
 
 def main():
     """Main function for AI-agent."""
-    openai_client = OpenAIClient()
-    response = openai_client.chat("Hello, how are you?")
-    print(response)
+    while True:
+        # Enable the user to chat with the AI
+        user_input = input('You: ')
+
+        if user_input == 'exit':
+            break
+
+        response = {'response': "Testing"}  # handle_input(user_input)
+
+        print('AI:', response['response'])
 
 
 if __name__ == "__main__":

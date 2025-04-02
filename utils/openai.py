@@ -23,8 +23,8 @@ class OpenAIClient:
         """Initializes the OpenAIClient with the given API key."""
         self.client = OpenAI(api_key=OPENAI_API_KEY)
 
-    def chat(self, prompt: str) -> str:
-        """Generates a response from the OpenAI API based on the provided prompt.
+    def chat(self, messages: list[dict]) -> str:
+        """Generates a response from the OpenAI API based on the provided message dictionary list.
 
         Args:
             prompt (str): The user's input prompt.
@@ -35,12 +35,11 @@ class OpenAIClient:
         try:
             response = self.client.chat.completions.create(
                 model=MODEL,
-                messages=[
-                    {"role": "system", "content": "You are a helpful assistant."},
-                    {"role": "user", "content": prompt},
-                ],
+                messages=messages,
                 temperature=0.5,
+                max_tokens=5000
             )
             return response.choices[0].message.content
         except Exception as error:  # pylint: disable=broad-except
             return f"Error occurred: {error}"
+
