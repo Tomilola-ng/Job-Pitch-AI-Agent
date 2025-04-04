@@ -4,6 +4,9 @@ from datetime import datetime, timedelta
 
 from utils.openai import OpenAIClient
 from tools.appointment_scheduler import schedule_google_appointment
+from tools.pitch_writer import generate_pitch
+from tools.phone_caller import phone_caller
+from tools.whatsapp_chat import whatsapp_chat
 
 
 def test_main():
@@ -43,6 +46,47 @@ def test_appointment_scheduling():
     print(result.get('id', result))
 
 
+def test_pitch_writer():
+    """Test function for pitch writer."""
+    print("Testing pitch writer...")
+
+    pitch = generate_pitch(
+        job_seeker_name="Tomilola Oluwafemi",
+        job_description="AI Agent Developer: Develop scalable AI-agent using Python...",
+        company_name="FinTech Solutions"
+    )
+    print(pitch)
+
+
+def test_phone_caller():
+    """Test function for phone caller."""
+    print("Testing phone caller...")
+    # Note: Replace the phone number with a valid test number
+    result = phone_caller(
+        job_seeker_name="Tomilola Oluwafemi",
+        target_phone_number="+2347055708314",
+        target_email="mulumbadeborah02@gmail.com"
+    )
+    if 'datetime' in result:
+        print(f"Demo scheduled for: {result['datetime']}")
+    else:
+        print(result['error'])
+
+
+def test_whatsapp_chat():
+    """Test function for WhatsApp chat."""
+    print("Testing WhatsApp chat...")
+    result = whatsapp_chat(
+        job_seeker_name="Tomilola Oluwafemi",
+        target_phone_number="+2347013002604",
+        target_email="tee.o2809@gmail.com"
+    )
+    print(result.get('datetime', result.get('error')))
+
+
 if __name__ == "__main__":
-    test_main()
-    test_appointment_scheduling()
+    # test_main()
+    # test_appointment_scheduling()
+    # test_pitch_writer()
+    # test_phone_caller()
+    test_whatsapp_chat()
