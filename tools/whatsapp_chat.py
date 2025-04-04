@@ -13,7 +13,8 @@ load_dotenv()
 
 WHATSAPP_ACCESS_TOKEN = os.getenv('WHATSAPP_ACCESS_TOKEN')
 PHONE_NUMBER_ID = os.getenv('WHATSAPP_PHONE_NUMBER_ID')
-API_URL = f"https://graph.facebook.com/v22.0/{PHONE_NUMBER_ID}/messages"
+API_VERSION = 'v22.0'
+API_URL = f"https://graph.facebook.com/{API_VERSION}/{PHONE_NUMBER_ID}/messages"
 
 
 def whatsapp_chat(job_seeker_name: str, target_phone_number: str, target_email: str) -> dict:
@@ -29,7 +30,7 @@ def whatsapp_chat(job_seeker_name: str, target_phone_number: str, target_email: 
         dict: Contains 'datetime' (datetime object) if successful, or 'error' (str) if failed.
 
     Example:
-        >>> result = whatsapp_chat("Tomilola Oluwafemi", "+2347013002604", "client@example.com")
+        >>> result = whatsapp_chat("Tomilola Oluwafemi", "+2347013002604", "tee.o2809@gmail.com")
         >>> print(result.get('datetime', result['error']))
     """
     if not all([job_seeker_name, target_phone_number, target_email]):
@@ -37,15 +38,14 @@ def whatsapp_chat(job_seeker_name: str, target_phone_number: str, target_email: 
     if not WHATSAPP_ACCESS_TOKEN:
         return {"error": "WHATSAPP_ACCESS_TOKEN must be set in .env"}
 
-    template_name = "job_pitch_quotation"
     payload = {
         "messaging_product": "whatsapp",
         "to": target_phone_number,
         "type": "template",
         "template": {
-            "name": template_name,
-            "language": {"code": "en_US"},
-            "components": [] if template_name == "job_pitch_quotation" else [
+            "name": "job_pitch_quotation",
+            "language": {"code": "en"},
+            "components": [
                 {
                     "type": "body",
                     "parameters": [
@@ -62,9 +62,17 @@ def whatsapp_chat(job_seeker_name: str, target_phone_number: str, target_email: 
         "Content-Type": "application/json"
     }
 
+    # Debug output
+    print(f"Sending to: {API_URL}")
+    print(f"Headers: {headers}")
+    print(f"Payload: {payload}")
+
     try:
         response = requests.post(API_URL, json=payload, headers=headers)
+        print(f"Response Status: {response.status_code}")
+        print(f"Response Text: {response.text}")
         response.raise_for_status()
+        # Mock datetime for now (webhook pending)
         demo_time = datetime.now() + timedelta(days=1, hours=10)  # Tomorrow at 10 AM
         return {"datetime": demo_time}
     except requests.RequestException as error:

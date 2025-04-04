@@ -65,7 +65,7 @@ def test_phone_caller():
     result = phone_caller(
         job_seeker_name="Tomilola Oluwafemi",
         target_phone_number="+2347055708314",
-        target_email="mulumbadeborah02@gmail.com"
+        target_email="sampleemail@gmail.com"
     )
     if 'datetime' in result:
         print(f"Demo scheduled for: {result['datetime']}")
@@ -75,11 +75,12 @@ def test_phone_caller():
 
 def test_whatsapp_chat():
     """Test function for WhatsApp chat."""
+    # Note: Replace the phone number with a valid test number
     print("Testing WhatsApp chat...")
     result = whatsapp_chat(
         job_seeker_name="Tomilola Oluwafemi",
-        target_phone_number="+2347013002604",
-        target_email="tee.o2809@gmail.com"
+        target_phone_number="+2347055708314",
+        target_email="sampleemail@gmail.com"
     )
     print(result.get('datetime', result.get('error')))
 
